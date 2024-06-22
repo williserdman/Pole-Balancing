@@ -166,5 +166,5 @@ export default function sketch(sk: any) {
 
 function weightedRandomChoiceFromTop(values: number[]): number[] {
     // Step 1: Find the top 4 values
-    return values.slice().sort((a, b) => b - a).slice(0, 4);
+    return values.slice().sort((a, b) => b - a).slice(0, 10);
 }
