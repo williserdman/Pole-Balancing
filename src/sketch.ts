@@ -1,14 +1,13 @@
 import p5 from "p5";
-import { Cart } from "./Game Parts/cart.ts";
 import { CartController, indexOfMax} from "./Neuroevolution/controller.ts";
 
 export default function sketch(sk: any) {
-    let handImage: p5.Image, myCart: Cart;
+    let handImage: p5.Image, myCart: CartController;
     sk.preload = () => {
         handImage = sk.loadImage("hand.webp");
     }
 
-    let populationSize = 500;
+    let populationSize = 100;
     let controllers: CartController[] = [];
 
     let timeTracker: number;
@@ -25,13 +24,15 @@ export default function sketch(sk: any) {
         //@ts-ignore
         // ml5.setBackend("cpu");
 
-        myCart = new Cart(sk, handImage, sk.height - 120);
+        myCart = new CartController(sk, handImage, sk.height - 120);
 
         timeTracker = Date.now();
     }
 
     sk.draw = () => {
         sk.background(220);
+        
+        myCart.fthink()
 
         if (sk.keyIsPressed == true) {
             if (sk.key == 'a') {
@@ -42,8 +43,9 @@ export default function sketch(sk: any) {
             }
         }
 
+        
         myCart.update(sk.deltaTime);
-        console.log(myCart.GetYPos());
+        //console.log(myCart.fitness);
 
         for (let controller of controllers) {
             controller.think();
@@ -51,6 +53,7 @@ export default function sketch(sk: any) {
         }
 
         if (Date.now() - timeTracker >= 20000) {
+            restrictDatingPool();
             normalizeFitness();
             reproduction();
 
@@ -62,6 +65,7 @@ export default function sketch(sk: any) {
         let index = 0;
         let start = sk.random(1)
 
+
         while (start > 0) {
             start = start - controllers[index].fitness;
             index++;
@@ -72,12 +76,27 @@ export default function sketch(sk: any) {
         return controllers[index].brain;
     }
 
+    function restrictDatingPool() {
+        let fitnessList: number[] = [];
+        controllers.forEach((c) => fitnessList.push(c.fitness));
+        
+        let topFitnesses: number[] = weightedRandomChoiceFromTop(fitnessList);
+        console.log(topFitnesses);
+        let topControllers: CartController[] = [];
+
+        controllers.forEach((c) => topFitnesses.includes(c.fitness) ? topControllers.push(c) : {});
+        console.log(topControllers);
+
+        controllers = topControllers;
+    }
+
     function normalizeFitness(): void {
         let sum = 0;
 
         // making them all >= 0
         let smallest = 0;
         for (let c of controllers) {
+            //console.log(c.fitness);
             if (c.fitness < smallest) {
                 smallest = c.fitness;
             }
@@ -86,18 +105,28 @@ export default function sketch(sk: any) {
 
         for (let controller of controllers) {
             sum += controller.fitness;
+           // console.log(controller.fitness);
         }
         controllers.forEach((c) => c.fitness /= sum);
+
+        controllers.forEach((c) => console.log(c.fitness));
     }
 
     function reproduction(): void {
         let nextBatch: CartController[] = [];
 
+       // controllers.forEach((c) => console.log(c.fitness)); 
+
+       //let temp = new CartController(sk, handImage, sk.height - 120);
+        let t2: number[] = []; controllers.forEach((c) => t2.push(c.fitness));
+        //console.log(t2);
+        let b = controllers[indexOfMax(t2)]
+        console.log("best", b.fitness);
+        let best = b.brain;
+            
         for (let i = 0; i < populationSize - 5; i++) {
 
-            let temp = new CartController(sk, handImage, sk.height - 120);
-            let t2: number[] = []; controllers.forEach((c) => t2.push(c.fitness));
-            let best = controllers[indexOfMax(t2)].brain
+     
 
             let parentA = weightedSelection();
             let parentB = weightedSelection();
@@ -105,9 +134,9 @@ export default function sketch(sk: any) {
             let child;
             
             if (parentA.fitness > parentB.fitness) {
-                child = best.crossover(parentA);
+                child = parentA.crossover(parentB);
             } else {
-                child = best.crossover(parentB);
+                child = parentB.crossover(parentA);
             }
 
             child.mutate();
@@ -122,11 +151,20 @@ export default function sketch(sk: any) {
             nextBatch.push(temp);
         }
 
+        let t4 = (new CartController(sk, handImage, sk.height - 120))
+        t4.changeBrain(best);
+        nextBatch.push(t4);
+
         let temp = new CartController(sk, handImage, sk.height - 120);
-        let t2: number[] = []; controllers.forEach((c) => t2.push(c.fitness));
-        temp.changeBrain(controllers[indexOfMax(t2)])
+        let t3: number[] = []; controllers.forEach((c) => t3.push(c.fitness));
+        temp.changeBrain(controllers[indexOfMax(t3)])
 
         // controllers is somehow a batch of genomes
         controllers = nextBatch;
     }
+}
+
+function weightedRandomChoiceFromTop(values: number[]): number[] {
+    // Step 1: Find the top 4 values
+    return values.slice().sort((a, b) => b - a).slice(0, 4);
 }

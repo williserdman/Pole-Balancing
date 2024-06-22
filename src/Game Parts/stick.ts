@@ -1,4 +1,5 @@
 import p5 from "p5";
+import { clamp } from "./cart";
 
 export class Stick {
     staticPoint: p5.Vector;
@@ -40,6 +41,7 @@ export class Stick {
 
         // Update angular velocity and angle
         this.angularVelocity += this.angularAcceleration * deltaTime;
+        clamp(this.angularVelocity, 9);
         this.angle += this.angularVelocity * deltaTime;
 
         // Apply damping to angular velocity to reduce wild swings

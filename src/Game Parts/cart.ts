@@ -61,7 +61,12 @@ export class Cart {
     }
 
     GetAttributes() {
-        return [this.stick.angle / (Math.PI * 2), this.stick.angularVelocity, this.xPos / 800, this.velocity]
+        let speedNorm = Math.abs(this.stick.angularVelocity) > 0.05 ? this.stick.angularVelocity / 9 : 0;
+        let newAngle = this.stick.angle
+        while (newAngle > 1) {
+            newAngle /= (2 * Math.PI)
+        }
+        return [newAngle, speedNorm, this.xPos / 800, this.velocity]
     }
 
     GetXPos() {
@@ -73,7 +78,7 @@ export class Cart {
     }
 }
 
-function clamp(workingNum: number, max: number) {
+export function clamp(workingNum: number, max: number) {
         if (workingNum > 0) {
             return Math.max(0, Math.min(workingNum, max));
         }
