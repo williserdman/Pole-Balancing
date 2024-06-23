@@ -1,0 +1,76 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Target Seeking - NeatJs</title>
+		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
+	<script src="https://d3js.org/d3.v2.min.js?2.9.3"></script>
+
+	<script src="./sketch.js"></script>
+	<script src="./population.js"></script>
+	<script src="./player.js"></script>
+	<script src="../../src/node.js"></script>
+	<script src="../../src/connection.js"></script>
+	<script src="../../src/genome.js"></script>
+	
+	<style>
+		.left {
+			float: left;
+			margin: 5px;
+			margin-right: 10px;
+			font-size: 18px;
+		}
+
+		.right {
+			display: inline-block;
+			margin-left: 20px;
+		}
+
+		.current {
+			border-right: solid;
+			padding-right: 10px;
+			padding-bottom: 20px;
+			float: left;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="leftDiv" class="left">
+		<div id="canvascontainer"></div>
+	</div>
+	
+    <div style="display: inline-block" >
+		<div class="right current">
+			<h2>Wins per Color:</h2>
+			Red: <span id="red"></span>
+			</br>
+			Green: <span id="green"></span>
+			</br>
+			Blue: <span id="blue"></span>
+			</br>
+			Yellow: <span id="yellow"></span>
+			</br>
+			Current Generation: <span id="generationN"></span>
+			</br>
+
+			<h2>Options:</h2>
+			Speed: <input id="speedSlider" type="range" min="0" max="50" value="1"> <span id="speed">1</span>
+			<br/>
+			Moving Target: <input id="moveCheckbox" type="checkbox" checked>
+		</div>
+	
+		<div class="right">
+			<h2>Best Genome:</h2>
+			Best Fitness: <span id="bestFitness"></span>
+			<div id="svgContainer"></div>
+		</div>
+	</div>
+  
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "dfaf86b39c8b42e0b6563e1e83f4ec82"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+</body>
+</html>

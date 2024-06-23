@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Self Driving - NeatJs</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/paulmasson/threejs-with-controls@r121/build/three.min.js"></script>
+	<script src="libs/physi.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
+	<script src="https://d3js.org/d3.v2.min.js?2.9.3"></script>
+
+	<script src="./libs/neat/population.js"></script>
+	<script src="./libs/neat/player.js"></script>
+	<script src="./libs/neat/node.js"></script>
+	<script src="./libs/neat/connection.js"></script>
+  <script src="./libs/neat/genome.js"></script>
+
+	<script src="libs/util.js"></script>
+	<script type="text/javascript" src="sketch.js"></script>
+	<style>
+		.left {
+			float: left;
+			margin: 5px;
+			margin-right: 10px;
+			font-size: 18px;
+		}
+
+		.right {
+			display: inline-block;
+			margin-left: 20px;
+		}
+
+		#viewport {
+			margin-bottom: 10px;
+		}
+
+		.current {
+			border-right: solid;
+			padding-right: 10px;
+			padding-bottom: 20px;
+			float: left;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="leftDiv" class="left">
+		<div id="viewport"></div>
+	</div>
+
+	<div style="display: inline-block" >
+		<div class="right current">
+			<div id="currentSvgContainer"><h2>Current Genome:</h2></div>
+
+			Current Genome: <span id="genomeN"></span>
+			</br>
+			Current Generation: <span id="generationN"></span>
+			</br>
+			Current Steering: <span id="currentS"></span>
+			</br>
+			Current Velocity: <span id="currentV"></span>
+			</br>
+			Current Average Velocity: <span id="mediumV"></span>
+
+			<h2>Options:</h2>
+			Follow the Car: <input id="followCheckbox" type="checkbox" checked>
+			</br>
+			Malus for car crash: <input id="crashCheckbox" type="checkbox">
+			</br>
+			Exponential Fitness Function: <input id="expCheckbox" type="checkbox" checked>
+			</br>
+			Include velocity into Fitness: <input id="velocityCheckbox" type="checkbox">
+			</br>
+		</div>
+
+		<div class="right">
+			<div id="bestSvgContainer"><h2>Best Genome:</h2></div>
+
+			Best Score: <span id="bestScore"></span>
+			</br>
+			Best Fitness: <span id="bestFitness"></span>
+		</div>
+	</div>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "dfaf86b39c8b42e0b6563e1e83f4ec82"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+</body>
+
+</html>

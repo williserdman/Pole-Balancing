@@ -1,0 +1,1 @@
+cherry picked this with some minor tweaks from https://github.com/GabrielTavernini/NeatJS/tree/master/src
