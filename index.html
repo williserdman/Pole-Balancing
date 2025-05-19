@@ -1,12 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vite + TS</title>
+    </head>
+    <body>
+        <div style="display: flex; gap: 1rem">
+            <div style="flex: 1; padding: 20px">
+                <p>
+                    This project explores neuroevolution, combining the
+                    computational power of TensorFlow.js with the interactive
+                    visual capabilities of p5.js. Every five seconds, a new
+                    generation of agents is spawned, evolved from the
+                    highest-performing individuals of the previous cycle.
+                    Through selective reproduction and random mutation, these
+                    agents progressively refine their neural networks, adapting
+                    over time. Performance is evaluated by the height of the
+                    pole balanced atop a virtual hand—the higher the pole’s tip,
+                    the better the score—creating a dynamic, evolutionary
+                    pursuit of optimal control.
+                </p>
+            </div>
+            <div style="flex: 1; margin: 50px">
+                <script type="module" src="/src/main.ts"></script>
+            </div>
+        </div>
+    </body>
 </html>
